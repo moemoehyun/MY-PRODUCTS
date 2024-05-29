@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Book</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .calendar {
+      border: 1px solid #ccc;
+    }
+    .day {
+      cursor: pointer;
+    }
+    .event-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: black;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div id="schedule-input">
+        <h3 class="mt-3 mb-4">Schedule for <span id="selected-date"></span></h3>
+        <textarea id="schedule-text" class="form-control" rows="10"></textarea>
+        <button id="save-btn" class="btn btn-primary mt-3">Save</button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="calendar">
+        <div class="row">
+          <div class="col">
+            <div class="d-flex justify-content-between">
+              <button id="prev-month" class="btn btn-secondary">&lt; 前の月</button>
+              <h3 id="current-month" class="text-center mt-3 mb-2"></h3>
+              <button id="next-month" class="btn btn-secondary">次の月 &gt;</button>
+            </div>
+            <h5 id="current-date" class="text-center mb-4"></h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">日</div>
+          <div class="col text-center">月</div>
+          <div class="col text-center">火</div>
+          <div class="col text-center">水</div>
+          <div class="col text-center">木</div>
+          <div class="col text-center">金</div>
+          <div class="col text-center">土</div>
+        </div>
+        <div id="calendar" class="row">
+          <!-- Calendar days will be dynamically added here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Function to generate calendar dynamically
+  function generateCalendar(year, month) {
+    const calendarDiv = document.getElementById('calendar');
+    const today = new Date(year, month);
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    const currentDay = today.getDate();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+
+    document.getElementById('current-month').textContent = getMonthName(currentMonth);
+    document.getElementById('current-date').textContent = `${currentYear}年${getMonthName(currentMonth)} ${currentDay}日`;
+
+    calendarDiv.innerHTML = '';
+
+    let dayIndex = 0;
+    for (let i = 0; i < 6; i++) {
+      const row = document.createElement('div');
+      row.className = 'row';
+      for (let j = 0; j < 7; j++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'col text-center day';
+        if (i === 0 && j < firstDayOfMonth) {
+          dayDiv.textContent = '';
+        } else if (dayIndex < daysInMonth) {
+          dayIndex++;
+          dayDiv.textContent = dayIndex < 10 ? ` ${dayIndex}` : dayIndex; // 一桁の場合は前にスペースを追加
+          dayDiv.setAttribute('data-day', dayIndex);
+        }
+        row.appendChild(dayDiv);
+      }
+      calendarDiv.appendChild(row);
+    }
+
+    // Attach event listeners to each day
+    const days = document.querySelectorAll('.day');
+    days.forEach(day => {
+      day.addEventListener('click', () => {
+        const selectedDate = day.getAttribute('data-day');
+        document.getElementById('selected-date').textContent = `${currentYear}年${getMonthName(currentMonth)} ${selectedDate}日`;
+        document.getElementById('schedule-input').style.display = 'block';
+        loadSchedule(selectedDate);
+      });
+    });
+  }
+
+  // Function to load schedule for a specific date
+  function loadSchedule(selectedDate) {
+    // Implement logic to load schedule from storage or API
+    // For demonstration purpose, let's assume it's fetched from localStorage
+    const schedule = localStorage.getItem(`schedule_${selectedDate}`);
+    document.getElementById('schedule-text').value = schedule || '';
+  }
+
+  // Function to save schedule for a specific date
+  function saveSchedule(selectedDate, schedule) {
+    // Implement logic to save schedule to storage or API
+    // For demonstration purpose, let's save it to localStorage
+    localStorage.setItem(`schedule_${selectedDate}`, schedule);
+  }
+
+  // Function to get month name from index
+  function getMonthName(monthIndex) {
+    const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+    return months[monthIndex];
+  }
+
+  // Event listener for save button
+  document.getElementById('save-btn').addEventListener('click', () => {
+    const selectedDate = document.getElementById('selected-date').textContent.split(' ')[1].replace('日', '');
+    const schedule = document.getElementById('schedule-text').value;
+    saveSchedule(selectedDate, schedule);
+    alert('Schedule saved successfully!');
+  });
+
+  // Event listener for previous month button
+  document.getElementById('prev-month').addEventListener('click', () => {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const prevYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+    generateCalendar(prevYear, prevMonth);
+  });
+
+  // Event listener for next month button
+  document.getElementById('next-month').addEventListener('click', () => {
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+    const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+    const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+    generateCalendar(nextYear, nextMonth);
+  });
+
+  // Initialize the calendar
+  generateCalendar(new Date().getFullYear(), new Date().getMonth());
+</script>
+
+</body>
+</html>

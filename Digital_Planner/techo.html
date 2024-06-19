@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Digital Planner</title>
+    <link rel="stylesheet" type="text/css" href="techo.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+  <body>
+    <!-- Header Start -->
+    <header class="site-header">
+      <div class="wrapper site-header__wrapper">
+        <a class="brand">Digital Planner</a>
+        <nav class="nav">
+          <button class="nav__toggle" aria-expanded="false" type="button">
+            menu
+          </button>
+          <ul class="nav__wrapper">
+            <li class="nav__item"><a href=how_to_techo.html>使い方</a></li>
+            <li class="nav__item"><a href="#">作成中</a></li>
+            <li class="nav__item"><a href="#">作成中</a></li>
+            <li class="nav__item"><a href="#">作成中</a></li>
+            <li class="nav__item"><a href="#">作成中</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- Header End -->
+ 
+  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+<div id="calendar-container">
+    <div id="calendar"></div>
+    <div id="inputPanel" style="display:none;">
+        <h2 id="selectedDate"></h2>
+        <textarea id="inputText" rows="4" cols="50"></textarea><br>
+        <button onclick="saveInput()">Save</button>
+        <button onclick="clearInput()">Clear</button>
+    </div>
+    <div id="weeklyInput"></div>
+</div>
+
+
+<script type="text/javascript" src="techo.js"></script>
+
+
+</body>
+</html>

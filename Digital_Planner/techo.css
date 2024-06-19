@@ -1,0 +1,108 @@
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+        background-color: #f9f9f9; /* 薄いピンク */
+    }
+    td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    .active-date {
+        border: 2px solid red; /* 赤い枠で囲む */
+    }
+    .filled-date {
+        background-color: rgb(145, 204, 255);
+    }
+    .sunday {
+        color: red; /* 日曜日を赤色にする */
+    }
+    .saturday {
+        color: blue; /* 土曜日を青色にする */
+    }
+    .past-date {
+        color: #b9b9b9; /* 過去の日付を灰色にする */
+    }
+    #calendar-container {
+        display: flex;
+    }
+    #calendar {
+        overflow-x: auto; /* カレンダーの横方向のスクロールを有効にする */
+        flex: 1; /* カレンダー部分を伸縮可能にする */
+    }
+    #inputPanel {
+        flex: 0 0 250px; /* 入力パネルの固定幅を設定 */
+    }
+    .month-header {
+        font-weight: bold;
+    }
+    #weeklyInput {
+        flex: 0 0 250px; /* 一週間の入力欄の固定幅を設定 */
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+    .active-date {
+    border: 2px solid red; /* 赤い枠で囲む */
+}
+    /* 
+** The Header Media Queries **
+** Tweak as per your needs **
+*/
+.brand {
+    font-weight: bold;
+    font-size: 40px; }
+  
+  .site-header {
+    position: relative;
+    background-color: #def7ff; }
+  
+  .site-header__wrapper {
+    padding-top: 1rem;
+    padding-bottom: 1rem; }
+    @media (min-width: 600px) {
+      .site-header__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0;
+        padding-bottom: 0; } }
+  @media (min-width: 600px) {
+    .nav__wrapper {
+      display: flex; } }
+  
+  @media (max-width: 599px) {
+    .nav__wrapper {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      z-index: -1;
+      background-color: #d9f0f7;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+      .nav__wrapper.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0); } }
+  
+  .nav__item a {
+    display: block;
+    padding: 1.5rem 1rem; }
+  
+  .nav__toggle {
+    display: none; }
+    @media (max-width: 599px) {
+      .nav__toggle {
+        display: block;
+        position: absolute;
+        right: 1rem;
+        top: 1rem; } }
+
+/* heaader desgin end */

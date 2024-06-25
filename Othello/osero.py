@@ -48,6 +48,14 @@ def is_valid_move(board, row, col, player):
                 return True
     return False
 
+# 駒を置ける場所があるかチェック
+def has_valid_moves(board, player):
+    for row in range(ROWS):
+        for col in range(COLS):
+            if is_valid_move(board, row, col, player):
+                return True
+    return False
+
 # 駒を置く
 def place_piece(board, row, col, player):
     if is_valid_move(board, row, col, player):
@@ -69,6 +77,8 @@ def place_piece(board, row, col, player):
 # ゲームの状態をチェック
 def check_game_over(board):
     if all(board[i][j] != 0 for i in range(ROWS) for j in range(COLS)):
+        return True
+    if not has_valid_moves(board, 1) and not has_valid_moves(board, -1):
         return True
     return False
 
@@ -108,6 +118,12 @@ def main():
                 game_over = True
 
         draw_board(board)
+
+        # ターンをスキップするロジック
+        if not has_valid_moves(board, player):
+            player *= -1
+            if not has_valid_moves(board, player):
+                game_over = True
 
     display_winner(board)
     main()  # ゲームの再開
